@@ -16,9 +16,11 @@ setup(
     description=SHORT_DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
-    version='0.0.1',
+    version='1.0.0',
     url='https://github.com/foliant-docs/foliantcontrib.checksources',
     packages=['foliant.preprocessors'],
+    author='foliant-docs',
+    author_email='foliant-shared@yandex.ru',
     license='MIT',
     platforms='any',
     install_requires=[

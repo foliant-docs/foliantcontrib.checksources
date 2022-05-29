@@ -1,5 +1,7 @@
 # CheckSources
 
+[![](https://img.shields.io/pypi/v/foliantcontrib.checksources.svg)](https://pypi.org/project/foliantcontrib.checksources/) [![](https://img.shields.io/github/v/tag/foliant-docs/foliantcontrib.checksources.svg?label=GitHub)](https://github.com/foliant-docs/foliantcontrib.checksources)
+
 CheckSources is a preprocessor that checks the project’s `chapters` for missing and unmentioned files in the sources directory.
 
 ## Installation

@@ -6,11 +6,12 @@ Check chapters for untracked and missing files
 import os
 
 from foliant.preprocessors.utils.preprocessor_ext import BasePreprocessorExt
-
+from foliant.utils import output
 
 class Preprocessor(BasePreprocessorExt):
     defaults = {
         'not_in_chapters': [],
+        'strict_check': True,
     }
 
     def __init__(self, *args, **kwargs):
@@ -20,6 +21,7 @@ class Preprocessor(BasePreprocessorExt):
 
         self.logger.debug(f'Preprocessor inited: {self.__dict__}')
         self.src_dir = self.project_path / self.config['src_dir']
+        self.critical_error = False
 
     def apply(self):
         self.logger.info('Applying preprocessor')
@@ -43,7 +45,13 @@ class Preprocessor(BasePreprocessorExt):
                         self.logger.debug(f'Adding file to the list of mentioned in chapters: {chapter_file_path}')
                     else:
                         self.logger.debug('Not exist, throw warning')
-                        self._warning(f'{os.path.relpath(chapter_file_path)} does not exist')
+                        msg = f'{os.path.relpath(chapter_file_path)} does not exist'
+                        if self.options['strict_check']:
+                            self.logger.error(msg)
+                            self.critical_error = True
+                            output(f'ERROR: {msg}')
+                        else:
+                            self._warning(msg)
 
                     chapters_files_paths.append(chapter_file_path)
 
@@ -82,5 +90,8 @@ class Preprocessor(BasePreprocessorExt):
             else:
                 self.logger.debug('Not mentioned, throw warning')
                 self._warning(f'{os.path.relpath(markdown_file_path)} does not mentioned in chapters')
-
-        self.logger.info('Preprocessor applied')
+        if self.critical_error:
+            self.logger.info('Critical errors have occurred')
+            os._exit(2)
+        else:
+            self.logger.info('Preprocessor applied')

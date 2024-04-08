@@ -8,6 +8,7 @@ import os
 from foliant.preprocessors.utils.preprocessor_ext import BasePreprocessorExt
 from foliant.utils import output
 
+
 class Preprocessor(BasePreprocessorExt):
     defaults = {
         'not_in_chapters': [],
@@ -21,7 +22,7 @@ class Preprocessor(BasePreprocessorExt):
 
         self.logger.debug(f'Preprocessor inited: {self.__dict__}')
         self.src_dir = self.project_path / self.config['src_dir']
-        self.critical_error = False
+        self.critical_error = []
 
     def apply(self):
         self.logger.info('Applying preprocessor')
@@ -48,7 +49,7 @@ class Preprocessor(BasePreprocessorExt):
                         msg = f'{os.path.relpath(chapter_file_path)} does not exist'
                         if self.options['strict_check']:
                             self.logger.error(msg)
-                            self.critical_error = True
+                            self.critical_error.append(msg)
                             output(f'ERROR: {msg}')
                         else:
                             self._warning(msg)
@@ -90,8 +91,10 @@ class Preprocessor(BasePreprocessorExt):
             else:
                 self.logger.debug('Not mentioned, throw warning')
                 self._warning(f'{os.path.relpath(markdown_file_path)} does not mentioned in chapters')
-        if self.critical_error:
+        if len(self.critical_error) > 0:
             self.logger.info('Critical errors have occurred')
+            errors = '\n'.join(self.critical_error)
+            output(f'\nBuild failed: checksources preprocessor errors: \n{errors}\n')
             os._exit(2)
         else:
             self.logger.info('Preprocessor applied')

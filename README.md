@@ -19,15 +19,20 @@ preprocessors:
     - checksources
 ```
 
-You can add a list of unmentioned files that wouldn't throw warnings by `not_in_chapters` option:
+You can add a list of unmentioned files that wouldn't throw warnings by `not_in_chapters` option.
+To perform a strict check, use the `strict_check` option:
 
 ```yaml
 preprocessors:
     - checksources:
         not_in_chapters:
           - tags.md
+        strict_check: true
 ```
 
-It is useful if you don't need to add some files to the table of contents.
+The `not_in_chapters` option is useful if you don't need to add some files to the table of contents.
+
+If the `strict_check` option is enabled, then if a critical error is detected, the build will be aborted after applying the preprocessor.
+
 
 

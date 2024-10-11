@@ -23,6 +23,7 @@ class Preprocessor(BasePreprocessorExt):
         self.logger.debug(f'Preprocessor inited: {self.__dict__}')
         self.src_dir = self.project_path / self.config['src_dir']
         self.critical_error = []
+        self.files_list = []
 
     def apply(self):
         self.logger.info('Applying preprocessor')
@@ -53,6 +54,15 @@ class Preprocessor(BasePreprocessorExt):
                             output(f'ERROR: {msg}')
                         else:
                             self._warning(msg)
+                    if chapters_subset in self.files_list:
+                        if self.options['strict_check']:
+                            self.logger.error(msg)
+                            self.critical_error.append(msg)
+                            output(f'ERROR: {msg}')
+                        else:
+                            self._warning(msg)
+                    else:
+                        self.files_list.append(chapters_subset)
 
                     chapters_files_paths.append(chapter_file_path)
 

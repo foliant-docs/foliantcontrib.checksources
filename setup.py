@@ -25,7 +25,7 @@ setup(
     platforms='any',
     install_requires=[
         'foliant>=1.0.8',
-        'foliantcontrib.utils==1.0.3'
+        'foliantcontrib.utils>=1.0.3'
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

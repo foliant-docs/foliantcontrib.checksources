@@ -55,6 +55,7 @@ class Preprocessor(BasePreprocessorExt):
                         else:
                             self._warning(msg)
                     if chapters_subset in self.files_list:
+                        msg = f'{os.path.relpath(chapter_file_path)} duplicated in chapters'
                         if self.options['strict_check']:
                             self.logger.error(msg)
                             self.critical_error.append(msg)

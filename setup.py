@@ -16,7 +16,7 @@ setup(
     description=SHORT_DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
-    version='1.0.1',
+    version='1.0.2',
     url='https://github.com/foliant-docs/foliantcontrib.checksources',
     packages=['foliant.preprocessors'],
     author='foliant-docs',
@@ -25,7 +25,7 @@ setup(
     platforms='any',
     install_requires=[
         'foliant>=1.0.8',
-        'foliantcontrib.utils==1.0.3'
+        'foliantcontrib.utils>=1.0.3'
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

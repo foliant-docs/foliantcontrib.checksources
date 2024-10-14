@@ -1,6 +1,7 @@
 # 1.0.2
 
--   Added file duplication check in chapters
+-   Added checking for duplicate files in the chapters
+-   Added parameters for `strict_check`
 
 # 1.0.1
 

@@ -12,7 +12,10 @@ from foliant.utils import output
 class Preprocessor(BasePreprocessorExt):
     defaults = {
         'not_in_chapters': [],
-        'strict_check': True,
+        'strict_check': [
+            'not_exist',
+            'duplicate'
+        ],
     }
 
     def __init__(self, *args, **kwargs):
@@ -23,6 +26,11 @@ class Preprocessor(BasePreprocessorExt):
         self.logger.debug(f'Preprocessor inited: {self.__dict__}')
         self.src_dir = self.project_path / self.config['src_dir']
         self.critical_error = []
+        if isinstance(self.options['strict_check'], bool):
+            if self.options['strict_check']:
+                self.options['strict_check'] = self.defaults['strict_check']
+            else:
+                self.options['strict_check'] = []
         self.files_list = []
 
     def apply(self):
@@ -48,7 +56,7 @@ class Preprocessor(BasePreprocessorExt):
                     else:
                         self.logger.debug('Not exist, throw warning')
                         msg = f'{os.path.relpath(chapter_file_path)} does not exist'
-                        if self.options['strict_check']:
+                        if 'not_exist' in self.options['strict_check']:
                             self.logger.error(msg)
                             self.critical_error.append(msg)
                             output(f'ERROR: {msg}')
@@ -56,7 +64,7 @@ class Preprocessor(BasePreprocessorExt):
                             self._warning(msg)
                     if chapters_subset in self.files_list:
                         msg = f'{os.path.relpath(chapter_file_path)} duplicated in chapters'
-                        if self.options['strict_check']:
+                        if 'duplicate' in self.options['strict_check']:
                             self.logger.error(msg)
                             self.critical_error.append(msg)
                             output(f'ERROR: {msg}')

@@ -1,3 +1,7 @@
+# 1.0.3
+
+-   Checking for duplicate files in the chapters is not strictly performed by default.
+
 # 1.0.2
 
 -   Added checking for duplicate files in the chapters

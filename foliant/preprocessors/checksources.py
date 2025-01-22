@@ -14,7 +14,6 @@ class Preprocessor(BasePreprocessorExt):
         'not_in_chapters': [],
         'strict_check': [
             'not_exist',
-            'duplicate'
         ],
     }
 

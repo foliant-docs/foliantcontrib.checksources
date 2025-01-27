@@ -31,6 +31,7 @@ preprocessors:
     - `duplicate` – checking for duplicate in the chapters.
 
   To disable strict check, use `strict_check: false`. And in order to enable all available checks, use `strict_check: true`.
+- `disable_warnings` – disabling the output of warnings, just like `strict_check` supports: `not_exist` and `duplicate`.
 
 **Example of options:**
 ```yaml
@@ -40,4 +41,6 @@ preprocessors:
           - tags.md
         strict_check:
           - not_exist
+        disable_warnings:
+          - duplicate
 ```

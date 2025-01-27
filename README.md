@@ -27,10 +27,11 @@ preprocessors:
 - `strict_check` – if a critical error is detected, the build will be failed after applying the preprocessor.
   Several checks are supported:
     - `not_exist` – checking the existence of the file.
-      Checks if the file specified in chapters exists;
+      Checks if the file specified in chapters exists (enabled by default);
     - `duplicate` – checking for duplicate in the chapters.
 
   To disable strict check, use `strict_check: false`. And in order to enable all available checks, use `strict_check: true`.
+- `disable_warnings` – disabling the output of warnings, just like `strict_check` supports: `not_exist` and `duplicate`.
 
 **Example of options:**
 ```yaml
@@ -40,4 +41,6 @@ preprocessors:
           - tags.md
         strict_check:
           - not_exist
+        disable_warnings:
+          - duplicate
 ```

@@ -14,8 +14,8 @@ class Preprocessor(BasePreprocessorExt):
         'not_in_chapters': [],
         'strict_check': [
             'not_exist',
-            'duplicate'
         ],
+        'disable_warnings': [],
     }
 
     def __init__(self, *args, **kwargs):
@@ -31,6 +31,9 @@ class Preprocessor(BasePreprocessorExt):
                 self.options['strict_check'] = self.defaults['strict_check']
             else:
                 self.options['strict_check'] = []
+        if not isinstance(self.options['disable_warnings'], list):
+            self.options['disable_warnings'] = self.defaults['disable_warnings']
+
         self.files_list = []
 
     def apply(self):
@@ -61,7 +64,8 @@ class Preprocessor(BasePreprocessorExt):
                             self.critical_error.append(msg)
                             output(f'ERROR: {msg}')
                         else:
-                            self._warning(msg)
+                            if not 'not_exist' in self.options['disable_warnings']:
+                                self._warning(msg)
                     if chapters_subset in self.files_list:
                         msg = f'{os.path.relpath(chapter_file_path)} duplicated in chapters'
                         if 'duplicate' in self.options['strict_check']:
@@ -69,7 +73,8 @@ class Preprocessor(BasePreprocessorExt):
                             self.critical_error.append(msg)
                             output(f'ERROR: {msg}')
                         else:
-                            self._warning(msg)
+                            if not 'duplicate' in self.options['disable_warnings']:
+                                self._warning(msg)
                     else:
                         self.files_list.append(chapters_subset)
 

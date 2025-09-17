@@ -12,6 +12,7 @@ from json import load
 
 from pathlib import Path
 
+from fnmatch import fnmatchcase
 
 class Preprocessor(BasePreprocessorExt):
     defaults = {
@@ -100,7 +101,7 @@ class Preprocessor(BasePreprocessorExt):
         def _fill_not_in_chapters():
 
             for not_in_chapters in self.options['not_in_chapters']:
-                not_in_chapters_paths.append((self.src_dir / not_in_chapters).resolve())
+                not_in_chapters_paths.append(f'{self.src_dir.resolve()}/{not_in_chapters}')
 
         not_in_chapters_paths = []
 
@@ -154,7 +155,9 @@ class Preprocessor(BasePreprocessorExt):
 
             self.logger.debug(f'Checking if the file is mentioned in chapters: {markdown_file_path}')
 
-            if markdown_file_path in chapters_files_paths or markdown_file_path in not_in_chapters_paths or markdown_file_path in included_files_paths:
+            if (markdown_file_path in chapters_files_paths
+            or markdown_file_path in included_files_paths
+            or any([fnmatchcase(str(markdown_file_path), pattern) for pattern in not_in_chapters_paths])):
                 self.logger.debug('Mentioned, keeping')
 
             else:

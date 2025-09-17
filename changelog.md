@@ -1,3 +1,7 @@
+# 1.0.6
+
+-   Added support for Unix-style wildcards in the `not_in_chapters` option.
+
 # 1.0.5
 
 -   Included files in projects built by MultiProject do not cause warnings.

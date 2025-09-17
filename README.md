@@ -21,9 +21,12 @@ preprocessors:
 
 ### Options
 
-- `not_in_chapters` –  a list of files not mentioned in the the chapters.
+- `not_in_chapters` –  a list of files not mentioned in the chapters.
   No warnings will be displayed for the specified files.
   This option is useful if you don't need to add some files to the table of contents.
+
+  Files can be specified in this option using [Unix-style](https://en.wikipedia.org/wiki/Glob_(programming)#Unix-like) wildcards.
+  The comparison is case-sensitive.
 - `strict_check` – if a critical error is detected, the build will be failed after applying the preprocessor.
   Several checks are supported:
     - `not_exist` – checking the existence of the file.
@@ -39,6 +42,7 @@ preprocessors:
     - checksources:
         not_in_chapters:
           - tags.md
+          - archive/*
         strict_check:
           - not_exist
         disable_warnings:
